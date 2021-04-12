@@ -21,12 +21,8 @@ public class SecretPhrase {
     public static int remainStars = 0;
 
     public static void main(String[] args) throws Exception {
-<<<<<<< Updated upstream
-        
-=======
 
         int round = roundsRequested();
->>>>>>> Stashed changes
 
         //Gets random phrase from Phrase.txt
         String[] phraseList = textFileToArray();
