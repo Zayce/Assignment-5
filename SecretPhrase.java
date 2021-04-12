@@ -22,7 +22,6 @@ public class SecretPhrase {
 
     public static void main(String[] args) throws Exception {
         
-
         //Gets random phrase from Phrase.txt
         String[] phraseList = textFileToArray();
         String phrase = phraseList[(int) (Math.random() * phraseList.length)];
@@ -109,7 +108,5 @@ public class SecretPhrase {
         }
         return result;
     }
-
-    public static 
 
 }
