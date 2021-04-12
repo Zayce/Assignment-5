@@ -11,7 +11,7 @@ public class Exercise2 {
         for (int size=10; size <1000000; size*=10) {
 	
 			//How many test cases for each instance
-			final int TEST_CASE_NUM = 10;
+			final int TEST_CASE_NUM = 30;
 
 			for(int i = 0; i < TEST_CASE_NUM; ++i){
 				//Generates random integer of given size
@@ -21,18 +21,39 @@ public class Exercise2 {
                     System.out.print(list[k] + ", ");
                 }
                 System.out.printf("\n");
+                int partitionIndex = partitionInteger(list);
 
                 System.out.print("After:  ");
                 int[] sortedList = partition(list);
                 for (int j = 0; j < sortedList.length; j++){
                     System.out.print(sortedList[j] + ", ");
                 }
+                System.out.printf("Partition is at: %d", partitionIndex);
 
                 System.out.printf("\n");
                 System.out.printf("==========================");
                 System.out.printf("\n");
 			}
         }
+
+        /*int[] list = {7, 2, 2, 3, 11, 2};
+        System.out.print("Before: ");
+        for (int k = 0; k < list.length; k++){
+            System.out.print(list[k] + ", ");
+        }
+        System.out.printf("\n");
+
+        System.out.print("After:  ");
+        int[] sortedList = partition(list);
+        for (int j = 0; j < sortedList.length; j++){
+            System.out.print(sortedList[j] + ", ");
+        }
+
+        System.out.printf("\n");
+        System.out.printf("==========================");
+        System.out.printf("\n");
+
+*/
     }
 
     public static int[] partition(int[] list){
@@ -67,41 +88,73 @@ public class Exercise2 {
         
 
         boolean leftRightLastElement = false;
+        boolean leftLastElement = false;
+        boolean rightLastElement = false;
+        //boolean isLeftRightOutOfBounds = false;
         //Swaps numbers greater than pivot on the left with numbers less than pivot on the right
         for(int i = 0, left = 0, right = pivotIndex + 1; i < lowestIterationSide; ++i){
+
+            //Checks if it is last element on both sides, and if so everything is checked
             while (!leftRightLastElement){
-
-                //Checks if 
-                    while((left < pivotIndex) && list[left] <= list[pivotIndex]){
-                        left++;
+                
+                //Goes through each left side to find first left number that is greater than pivot
+                if (left < pivotIndex){
+                    while(list[left] <= list[pivotIndex]){
+                        leftLastElement = (left >= (pivotIndex - 1));
+                        if(!leftLastElement){ 
+                            left++;
+                        }
+                        else
+                            break;
                     }
+                }
 
-                    while ((right < list.length) && list[right] > list[pivotIndex]){
-                        right++;
+                //Goes through each right side to find first right number that is less than pivot
+                if (right < list.length){ 
+                    while (list[right] > list[pivotIndex]){
+                        rightLastElement = (right >= list.length - 1);
+                        if (!rightLastElement){
+                            right++;
+                        }
+                        else
+                            break;
                     }
-
-                leftRightLastElement = ((left >= (pivotIndex - 1)) && (right >= list.length - 1));
+                }
+                leftRightLastElement = (leftLastElement && rightLastElement);
 
                 //Swaps left and right if they are in the wrong place
-                if(!leftRightLastElement){
+                if((left < pivotIndex) && (right < list.length)){
                     if (list[left] > list[right]){
                         temp = list[right];
                         list[right] = list[left];
                         list[left] = temp;
-    
-                        left++;
-                        right++;
                     }
                 }
-
-                leftRightLastElement = ((left >= (pivotIndex - 1)) && (right >= list.length - 1));
-            
-
-
+                leftRightLastElement = (leftLastElement && rightLastElement);
             }
         }
         return list;
     }
+
+    public static int partitionInteger(int[] list){
+        int pivot = list[0];
+        int countGreater = 0;
+        int lastIndex = list.length - 1;
+
+        //Counts number of numbers less than or equal to 
+        for (int i = 1; i < list.length; ++i){
+            if (pivot < list[i]){
+                countGreater++;
+            }
+        }
+
+        //Place pivotIndex in place that is less than future integers greater than pivot
+
+        int pivotIndex = lastIndex - countGreater;
+    
+        return pivotIndex;
+    }
+    
 
     public static int[] genArray(int size){
 
