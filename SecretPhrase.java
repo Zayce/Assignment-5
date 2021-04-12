@@ -6,10 +6,11 @@
  ** Compiler:JDK 15.0.1
  */
 
+import java.io.File;
 import javax.swing.JOptionPane;
 import java.lang.Math;
 import java.lang.String;
-import java.io.File;
+import java.util.Scanner;
 
 
 public class SecretPhrase {
