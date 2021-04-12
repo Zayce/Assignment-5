@@ -22,10 +22,9 @@ public class SecretPhrase {
 
     public static void main(String[] args) throws Exception {
         
-        
-        String[] phraseList = textFileToArray();
 
-        // pick phrase from list
+        //Gets random phrase from Phrase.txt
+        String[] phraseList = textFileToArray();
         String phrase = phraseList[(int) (Math.random() * phraseList.length)];
         initialStars(phrase);
         String message = "Play our game - guess the phrase\n Enter one letter\n" + getRiddle(phrase);
@@ -47,8 +46,8 @@ public class SecretPhrase {
     }
 
     public static String[] textFileToArray () throws Exception{
- 
         File file = new File("Phrases.txt");
+
         //Exits if can't read file
         if (!file.canRead()){ 
             System.out.println("Error: permission to read from file is denied"); 
@@ -58,15 +57,14 @@ public class SecretPhrase {
         //Counts number of lines
         int lines = 0;
         Scanner countLines = new Scanner(file);
-       // String[] phraseList = new String[100];
         while(countLines.hasNextLine()){
             countLines.nextLine();
             lines++;
         }
         countLines.close();
 
+        //Reads each lines and assign it to the array
         String[] phraseList = new String[lines];
-        
         Scanner readLine = new Scanner(file);
         for (int i = 0; i < lines; ++i){
             phraseList[i] = readLine.nextLine();
@@ -74,10 +72,7 @@ public class SecretPhrase {
         readLine.close();
         
         return phraseList;
-
     }
-
-
 
     // initial showUp and remainStars
     // make sure space character is revealed
@@ -115,5 +110,6 @@ public class SecretPhrase {
         return result;
     }
 
+    public static 
 
 }
