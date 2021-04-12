@@ -8,61 +8,25 @@
 
 public class Exercise2 {
     public static void main(String[] args) throws Exception {
-        for (int size=10; size <1000000; size*=10) {
-	
-			//How many test cases for each instance
-			final int TEST_CASE_NUM = 30;
 
-			for(int i = 0; i < TEST_CASE_NUM; ++i){
-				//Generates random integer of given size
-				int[] list = genArray(7);
-                System.out.print("Before: ");
-                for (int k = 0; k < list.length; k++){
-                    System.out.print(list[k] + ", ");
-                }
-                System.out.printf("\n");
-                int partitionIndex = partitionInteger(list);
-
-                System.out.print("After:  ");
-                int[] sortedList = partition(list);
-                for (int j = 0; j < sortedList.length; j++){
-                    System.out.print(sortedList[j] + ", ");
-                }
-                System.out.printf("Partition is at: %d", partitionIndex);
-
-                System.out.printf("\n");
-                System.out.printf("==========================");
-                System.out.printf("\n");
-			}
+        final int TEST_CASE_NUM = 10;
+        for(int i = 0; i < TEST_CASE_NUM; ++i){
+            //Generates random integer of given size
+            int[] list = genArray(10);
+            printArray(list);
         }
-
-        /*int[] list = {7, 2, 2, 3, 11, 2};
-        System.out.print("Before: ");
-        for (int k = 0; k < list.length; k++){
-            System.out.print(list[k] + ", ");
-        }
-        System.out.printf("\n");
-
-        System.out.print("After:  ");
-        int[] sortedList = partition(list);
-        for (int j = 0; j < sortedList.length; j++){
-            System.out.print(sortedList[j] + ", ");
-        }
-
-        System.out.printf("\n");
-        System.out.printf("==========================");
-        System.out.printf("\n");
-
-*/
+/*
+        int[] list = {9, 17, 10, 8, 4, 20, 16, 0};
+        printArray(list);*/
     }
 
-    public static int[] partition(int[] list){
+    public static int partition(int[] list){
         int pivot = list[0];
         int countGreater = 0;
         int lastIndex = list.length - 1;
         int temp;
 
-        //Counts number of numbers less than or equal to 
+        //Counts numbers greater than pivot
         for (int i = 1; i < list.length; ++i){
             if (pivot < list[i]){
                 countGreater++;
@@ -70,7 +34,6 @@ public class Exercise2 {
         }
 
         //Place pivotIndex in place that is less than future integers greater than pivot
-
         int pivotIndex = lastIndex - countGreater;
         
         //Swaps first element with pivotIndex
@@ -86,11 +49,11 @@ public class Exercise2 {
         else
             lowestIterationSide = countGreater;
         
-
+        //Initializes booleans if left, right and both are the last elements
         boolean leftRightLastElement = false;
         boolean leftLastElement = false;
         boolean rightLastElement = false;
-        //boolean isLeftRightOutOfBounds = false;
+
         //Swaps numbers greater than pivot on the left with numbers less than pivot on the right
         for(int i = 0, left = 0, right = pivotIndex + 1; i < lowestIterationSide; ++i){
 
@@ -101,9 +64,8 @@ public class Exercise2 {
                 if (left < pivotIndex){
                     while(list[left] <= list[pivotIndex]){
                         leftLastElement = (left >= (pivotIndex - 1));
-                        if(!leftLastElement){ 
+                        if(!leftLastElement)
                             left++;
-                        }
                         else
                             break;
                     }
@@ -113,16 +75,14 @@ public class Exercise2 {
                 if (right < list.length){ 
                     while (list[right] > list[pivotIndex]){
                         rightLastElement = (right >= list.length - 1);
-                        if (!rightLastElement){
+                        if (!rightLastElement)
                             right++;
-                        }
                         else
                             break;
                     }
                 }
-                leftRightLastElement = (leftLastElement && rightLastElement);
 
-                //Swaps left and right if they are in the wrong place
+                //Swaps left and right numbers if left is bigger than right
                 if((left < pivotIndex) && (right < list.length)){
                     if (list[left] > list[right]){
                         temp = list[right];
@@ -133,34 +93,14 @@ public class Exercise2 {
                 leftRightLastElement = (leftLastElement && rightLastElement);
             }
         }
-        return list;
-    }
-
-    public static int partitionInteger(int[] list){
-        int pivot = list[0];
-        int countGreater = 0;
-        int lastIndex = list.length - 1;
-
-        //Counts number of numbers less than or equal to 
-        for (int i = 1; i < list.length; ++i){
-            if (pivot < list[i]){
-                countGreater++;
-            }
-        }
-
-        //Place pivotIndex in place that is less than future integers greater than pivot
-
-        int pivotIndex = lastIndex - countGreater;
-    
         return pivotIndex;
     }
-    
 
     public static int[] genArray(int size){
 
         final int LOWEST_SIZE = 5;
 
-        int randomSize = (int) ((Math.random() * (size - LOWEST_SIZE)) + LOWEST_SIZE);
+        int randomSize = (int) ((Math.random() * (size - LOWEST_SIZE) + 1) + LOWEST_SIZE);
 
         int[] randomArray = new int[randomSize];
         for(int i = 0; i < randomArray.length; ++i){
@@ -169,5 +109,31 @@ public class Exercise2 {
         }
         return randomArray;
     } 
+
+    public static void printArray(int[] list){
+        System.out.print("Before: ");
+            System.out.printf("[" + list[0] + "], ");
+            for (int k = 1; k < list.length; k++){
+                System.out.print(list[k] + ", ");
+            }
+            System.out.printf("\n");
+
+            System.out.print("After:  ");
+            int partitionIndex = partition(list);
+
+            String message = "";
+            for (int j = 0; j < list.length; j++){
+                if(partitionIndex != j)
+                    message += list[j] + ", ";
+                else
+                    message += "[" + list[j] + "], ";          
+            }
+            System.out.printf("%-45s", message);
+            System.out.printf("|| Partition is at: %d", partitionIndex);
+
+            System.out.printf("\n");
+            System.out.printf("==========================");
+            System.out.printf("\n");
+    }
 
 }
