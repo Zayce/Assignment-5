@@ -21,7 +21,12 @@ public class SecretPhrase {
     public static int remainStars = 0;
 
     public static void main(String[] args) throws Exception {
+<<<<<<< Updated upstream
         
+=======
+
+        int round = roundsRequested();
+>>>>>>> Stashed changes
 
         //Gets random phrase from Phrase.txt
         String[] phraseList = textFileToArray();
@@ -45,6 +50,56 @@ public class SecretPhrase {
                 "Congratulations!\nThe phrase is \"" + phrase + "\"\nYour Score is " + score + " out of 100.");
     }
 
+<<<<<<< Updated upstream
+=======
+    public static void noRepeatPhrases(int rounds){
+        
+
+    }
+
+    public static void phraseRounds(int rounds){
+        //String[]
+    }
+
+    public static int roundsRequested(){
+        String roundString = "";
+        do{
+            roundString = JOptionPane.showInputDialog(null,
+            "How many rounds would you like to play?: ");
+            errorMessages(roundString);
+        } while(!isDigitValid(roundString));
+        return Integer.parseInt(roundString);
+    }
+
+    //TODO: Give credit to Lab08 Matrix code, but edited to fit here
+    public static boolean isDigitValid(String input){
+
+        Character inputChar;
+    
+        for(int indexStart = 0; indexStart < input.length(); ++indexStart){
+            inputChar = input.charAt(indexStart);
+            if (!Character.isDigit(inputChar))
+                return false;
+        }
+        
+        int num = Integer.parseInt(input);
+        if(num <= 1)
+            return false;
+        else
+            return true;
+    }
+
+    //TODO: Give credit to Lab08 Matrix code but changed to fit here
+    public static void errorMessages(String input){
+        
+        //For string, empty or other invalid inputs
+        if (!isDigitValid(input)){
+            JOptionPane.showMessageDialog(null, 
+            "Invalid input, please enter integers more than 1 only.");
+        }
+    }
+
+>>>>>>> Stashed changes
     public static String[] textFileToArray () throws Exception{
         File file = new File("Phrases.txt");
 
