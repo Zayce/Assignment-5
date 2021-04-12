@@ -1,0 +1,57 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch SecretPhrase",
+            "request": "launch",
+            "mainClass": "SecretPhrase",
+            "projectName": "Assignment 5_3d213865"
+        },
+        {
+            "type": "java",
+            "name": "Launch AppendToFile",
+            "request": "launch",
+            "mainClass": "AppendToFile"
+        },
+        {
+            "type": "java",
+            "name": "Launch ArraysExercise",
+            "request": "launch",
+            "mainClass": "ArraysExercise"
+        },
+        {
+            "type": "java",
+            "name": "Launch FileAppendDemo",
+            "request": "launch",
+            "mainClass": "FileAppendDemo"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReadFromFile",
+            "request": "launch",
+            "mainClass": "ReadFromFile"
+        },
+        {
+            "type": "java",
+            "name": "Launch SecretPhrase(1)",
+            "request": "launch",
+            "mainClass": "SecretPhrase"
+        },
+        {
+            "type": "java",
+            "name": "Launch StudentScoreFile",
+            "request": "launch",
+            "mainClass": "StudentScoreFile"
+        }
+    ]
+}

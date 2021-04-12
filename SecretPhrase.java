@@ -15,15 +15,69 @@ import java.util.Scanner;
 
 public class SecretPhrase {
 
-    public static final String[] phrase_list = { "A blessing in disguise", "Better late than never",
-            "Cut somebody some slack", "Get out of hand", "Make a long story short", "So far so good",
-            "To make matters worse", "We will cross that bridge when we come to it", "To get bent out of shape",
-            "That is the last straw", "Speak of the devil", "On the ball", "Miss the boat", "Pull yourself together",
-            "No pain no gain", "Hang in there" };
     // showUp is a boolean array, if value in one index is true, it means letter of the riddle on that index has been revealed
     public static boolean[] showUp;
     // remainStars stores how many letters are not revealed yet
     public static int remainStars = 0;
+
+    public static void main(String[] args) throws Exception {
+        
+        
+        String[] phraseList = textFileToArray();
+
+        // pick phrase from list
+        String phrase = phraseList[(int) (Math.random() * phraseList.length)];
+        initialStars(phrase);
+        String message = "Play our game - guess the phrase\n Enter one letter\n" + getRiddle(phrase);
+        int counter = 0;
+        while (remainStars != 0) {
+            String input = JOptionPane.showInputDialog(null, message);
+            char guessLetter = Character.toUpperCase(input.charAt(0));
+            if (checkLetter(phrase, guessLetter)) {
+                message = "Play our game - guess the phrase\n Enter one letter\n" + getRiddle(phrase);
+            } else {
+                message = "Sorry - not in the phrase: " + guessLetter + "\n" + getRiddle(phrase);
+            }
+            counter++;
+        }
+        // calculate the score
+        long score = Math.round(phrase.length() * 1.0 / counter *100);
+        JOptionPane.showMessageDialog(null,
+                "Congratulations!\nThe phrase is \"" + phrase + "\"\nYour Score is " + score + " out of 100.");
+    }
+
+    public static String[] textFileToArray () throws Exception{
+ 
+        File file = new File("Phrases.txt");
+        //Exits if can't read file
+        if (!file.canRead()){ 
+            System.out.println("Error: permission to read from file is denied"); 
+            System.exit(1);
+        }
+
+        //Counts number of lines
+        int lines = 0;
+        Scanner countLines = new Scanner(file);
+       // String[] phraseList = new String[100];
+        while(countLines.hasNextLine()){
+            countLines.nextLine();
+            lines++;
+        }
+        countLines.close();
+
+        String[] phraseList = new String[lines];
+        
+        Scanner readLine = new Scanner(file);
+        for (int i = 0; i < lines; ++i){
+            phraseList[i] = readLine.nextLine();
+        }
+        readLine.close();
+        
+        return phraseList;
+
+    }
+
+
 
     // initial showUp and remainStars
     // make sure space character is revealed
@@ -61,25 +115,5 @@ public class SecretPhrase {
         return result;
     }
 
-    public static void main(String[] args) {
-        // pick phrase from list
-        String phrase = phrase_list[(int) (Math.random() * phrase_list.length)];
-        initialStars(phrase);
-        String message = "Play our game - guess the phrase\n Enter one letter\n" + getRiddle(phrase);
-        int counter = 0;
-        while (remainStars != 0) {
-            String input = JOptionPane.showInputDialog(null, message);
-            char guessLetter = Character.toUpperCase(input.charAt(0));
-            if (checkLetter(phrase, guessLetter)) {
-                message = "Play our game - guess the phrase\n Enter one letter\n" + getRiddle(phrase);
-            } else {
-                message = "Sorry - not in the phrase: " + guessLetter + "\n" + getRiddle(phrase);
-            }
-            counter++;
-        }
-        // calculate the score
-        long score = Math.round(phrase.length() * 1.0 / counter *100);
-        JOptionPane.showMessageDialog(null,
-                "Congratulations!\nThe phrase is \"" + phrase + "\"\nYour Score is " + score + " out of 100.");
-    }
+
 }
